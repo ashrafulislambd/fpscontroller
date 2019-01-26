@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://KinematicBody.gd" type="Script" id=1]
+[ext_resource path="res://Camera.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape" id=1]
+
+radius = 1.0
+height = 1.0
+
+[node name="FirstPersonController" type="Spatial" index="0"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Player" type="KinematicBody" parent="." index="0"]
+
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+axis_lock_linear_x = false
+axis_lock_linear_y = false
+axis_lock_linear_z = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+collision/safe_margin = 0.001
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+Sensitivity_X = 0.1
+Sensitivity_Y = 0.05
+Invert_Y_Axis = false
+Exit_On_Escape = true
+Maximum_Y_Look = 90
+Accelaration = 5
+Maximum_Walk_Speed = 10
+Jump_Speed = 2
+
+[node name="Camera" type="Camera" parent="Player" index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.435676, 0 )
+keep_aspect = 1
+cull_mask = 1048575
+environment = null
+h_offset = 0.0
+v_offset = 0.0
+doppler_tracking = 0
+projection = 0
+current = false
+fov = 70.0
+size = 1.0
+near = 0.05
+far = 100.0
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Player" index="1"]
+
+transform = Transform( 0.2, 0, 0, 0, -8.74228e-009, -0.4, 0, 0.2, -1.74846e-008, 0, 0, 0 )
+shape = SubResource( 1 )
+disabled = false
+_sections_unfolded = [ "Transform" ]
+
+
