@@ -14,9 +14,7 @@ func initializeComponents():
 
 func _ready():
 	self.initializeComponents()
-	
-	pass
-	
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		if inversion_mult * sensitivity_y * event.relative.y >= 0 and self.rotation_degrees.x >= max_y:
