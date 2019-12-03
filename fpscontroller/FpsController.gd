@@ -10,8 +10,8 @@ export var Walk_Accelaration = 3
 export var Maximum_Walk_Speed = 5
 export var Sprint_Accelaration = 6
 export var Maximum_Sprint_Speed = 10
-export var Jump_Speed = 3
-export var Gravity = 0.098
+export var Jump_Speed = 4
+export var Gravity = 9.8
 
 var velocity = Vector3(0,0,0)
 var forward_velocity = 0
@@ -30,7 +30,7 @@ func _process(delta):
 func _physics_process(delta):
 	velocity.x = 0
 	velocity.z = 0
-	velocity.y -= Gravity
+	velocity.y -= Gravity * delta
 	
 	var Accelaration: float
 	var Maximum_Speed: float
