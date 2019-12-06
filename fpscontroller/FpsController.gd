@@ -1,6 +1,8 @@
 extends KinematicBody
 class_name FpsController
 
+onready var camera := $Camera as FpsCamera
+
 export(float) var Sensitivity_X := 0.01
 export(float) var Sensitivity_Y := 0.005
 export(bool) var Invert_Y_Axis := false
@@ -12,42 +14,35 @@ export(float) var Sprint_Accelaration := 6.0
 export(float) var Maximum_Sprint_Speed := 10.0
 export(float) var Jump_Speed := 4.0
 export(float) var Gravity := 9.8
+export(bool) var CameraIsCurrentOnStart: bool = true
 
-onready var camera := $Camera as FpsCamera
+export(NodePath) var HeldObjectPath: NodePath
+var heldObject: Spatial setget held_object_set, held_object_get
+func held_object_set(value: Spatial):
+	heldObject = value
+	self.camera.heldObject = self.heldObject
+func held_object_get() -> Spatial:
+	return heldObject
+
+var mouseCaptured: bool setget mouse_captured_set, mouse_captured_get
+func mouse_captured_set(value: bool):
+	mouseCaptured = value
+	if mouseCaptured:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+func mouse_captured_get() -> bool:
+	return mouseCaptured
 
 var velocity := Vector3(0,0,0)
 var forward_velocity := 0.0
 var Movement_Speed := 0.0
 
-export(NodePath) var HeldObjectPath: NodePath
-var heldObject: Spatial setget held_object_set, held_object_get
-
-func held_object_set(value: Spatial):
-	heldObject = value
-	self.camera.heldObject = self.heldObject
-	
-func held_object_get() -> Spatial:
-	return heldObject
-
-var mouseCaptured setget mouse_captured_set, mouse_captured_get
-
-func mouse_captured_set(value: bool):
-	mouseCaptured = value
-	
-	if mouseCaptured:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
-func mouse_captured_get() -> Spatial:
-	return mouseCaptured
-
 func _ready():
 	self.mouseCaptured = true
-	forward_velocity = Movement_Speed
-	set_process(true)
-	
 	self.heldObject = get_node_or_null(HeldObjectPath)
+	self.camera.current = CameraIsCurrentOnStart
+	forward_velocity = Movement_Speed
 
 func _process(delta):
 	if Exit_On_Escape:
