@@ -1,8 +1,8 @@
 extends Camera
 
-const SENSITIVITY_Y = 0
-const INVERSION_MULT = 1
-const MAX_Y = 89
+var SENSITIVITY_Y = 0
+var INVERSION_MULT = 1
+var MAX_Y = 89
 
 func initializeComponents():
 	SENSITIVITY_Y = self.get_parent().Sensitivity_Y
